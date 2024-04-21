@@ -1,0 +1,12 @@
+version: "3"
+services:
+  frontend:
+    build:
+      context: ./
+    container_name: frontend
+    volumes:
+      - ./public:/app/public
+      - ./src:/app/src
+      - ./tailwind.config.js:/app/tailwind.config.js
+    ports:
+      - "3000:3000"
