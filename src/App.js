@@ -1,16 +1,11 @@
-import "./App.css";
-import FileUploader from "./components/Files/FileUploader";
-import Auth0LoginButton from "./components/Auth/Auth0LoginButton";
+import ProtectedRoute from "./components/Common/ProtectedRoute";
+import { Router, Routes, createBrowserRouter } from "react-router-dom";
+import Homepage from "./components/Common/Homepage";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <FileUploader></FileUploader>
-        <Auth0LoginButton></Auth0LoginButton>
-      </header>
-    </div>
-  );
-}
+const App = () => (
+  <Routes>
+    <ProtectedRoute path="/" component={Homepage} />
+  </Routes>
+);
 
 export default App;
