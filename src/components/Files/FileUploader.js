@@ -1,7 +1,9 @@
 import React, { useState } from "react";
+import { API_URL } from "../../lib/Constants";
 
 const FileUploader = () => {
   const [selectedFile, setSelectedFile] = useState(null);
+  const [queryText, setQueryText] = useState("");
 
   // Function to handle file selection
   const handleFileChange = (e) => {
@@ -11,12 +13,46 @@ const FileUploader = () => {
   // Function to handle file upload
   const handleFileUpload = () => {
     if (selectedFile) {
-      // You can perform file upload logic here
-      console.log("Uploading file:", selectedFile);
-      // Reset selected file state after upload
-      setSelectedFile(null);
+      const formData = new FormData();
+      formData.append("resume", selectedFile); // Ensure 'resume' matches the expected field name
+
+      fetch(`${API_URL}/upload`, {
+        method: "POST",
+        body: formData,
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          console.log("File uploaded successfully:", data);
+          // Reset selected file state after upload
+          setSelectedFile(null);
+        })
+        .catch((error) => {
+          console.error("Error uploading file:", error);
+        });
     } else {
       alert("Please select a file to upload.");
+    }
+  };
+
+  // Function to handle text query
+  const handleTextQuery = () => {
+    if (queryText.trim() !== "") {
+      fetch(`${API_URL}/resume/query`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ user: queryText }),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          console.log("Query result:", data);
+        })
+        .catch((error) => {
+          console.error("Error querying API:", error);
+        });
+    } else {
+      alert("Please enter a query text.");
     }
   };
 
@@ -34,6 +70,14 @@ const FileUploader = () => {
           {(selectedFile.size / 1024).toFixed(2)} KB)
         </div>
       )}
+
+      <input
+        type="text"
+        value={queryText}
+        onChange={(e) => setQueryText(e.target.value)}
+        placeholder="Enter query text"
+      />
+      <button onClick={handleTextQuery}>Query</button>
     </div>
   );
 };
