@@ -44,9 +44,10 @@ const FileUploader = () => {
         },
         body: JSON.stringify({ user: queryText }),
       })
-        .then((response) => response.json())
-        .then((data) => {
-          console.log("Query result:", data);
+        .then((response) => response.blob()) // Get the response as a Blob
+        .then((blob) => {
+          const url = URL.createObjectURL(blob); // Create a URL from the Blob
+          window.open(url, "_blank"); // Open the URL in a new tab
         })
         .catch((error) => {
           console.error("Error querying API:", error);
