@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import { API_URL } from "../../lib/Constants";
+import { useAuth0 } from "@auth0/auth0-react";
 
 const FileUploader = () => {
+  const { getAccessTokenSilently, isAuthenticated } = useAuth0();
   const [selectedFile, setSelectedFile] = useState(null);
   const [queryText, setQueryText] = useState("");
 
@@ -11,7 +13,8 @@ const FileUploader = () => {
   };
 
   // Function to handle file upload
-  const handleFileUpload = () => {
+  const handleFileUpload = async () => {
+    const token = await getAccessTokenSilently();
     if (selectedFile) {
       const formData = new FormData();
       formData.append("resume", selectedFile); // Ensure 'resume' matches the expected field name
@@ -19,6 +22,9 @@ const FileUploader = () => {
       fetch(`${API_URL}/upload`, {
         method: "POST",
         body: formData,
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       })
         .then((response) => response.json())
         .then((data) => {
@@ -72,13 +78,13 @@ const FileUploader = () => {
         </div>
       )}
 
-      <input
-        type="text"
-        value={queryText}
-        onChange={(e) => setQueryText(e.target.value)}
-        placeholder="Enter query text"
-      />
-      <button onClick={handleTextQuery}>Query</button>
+      {/* <input */}
+      {/*   type="text" */}
+      {/*   value={queryText} */}
+      {/*   onChange={(e) => setQueryText(e.target.value)} */}
+      {/*   placeholder="Enter query text" */}
+      {/* /> */}
+      {/* <button onClick={handleTextQuery}>Query</button> */}
     </div>
   );
 };

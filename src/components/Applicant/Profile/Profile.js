@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Avatar, Button, TextField, Typography } from "@mui/material";
 import { API_URL } from "../../../lib/Constants";
 import { useAuth0 } from "@auth0/auth0-react";
+import FileUploader from "../../Files/FileUploader";
 
 const Profile = () => {
   const { getAccessTokenSilently, isAuthenticated } = useAuth0();
@@ -91,6 +92,10 @@ const Profile = () => {
           <Typography component="h1" variant="h5" className="text-center mt-4">
             User Profile
           </Typography>
+          <div className="flex flex-col">
+            <Typography>Upload your resume:</Typography>
+            <FileUploader></FileUploader>
+          </div>
         </div>
         <form className="mb-4" onSubmit={handleSubmit}>
           <TextField

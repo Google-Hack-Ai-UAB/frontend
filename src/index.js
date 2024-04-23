@@ -7,6 +7,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Homepage from "./components/Common/Homepage";
 import ProtectedRoute from "./components/Common/ProtectedRoute";
 import Profile from "./components/Applicant/Profile/Profile";
+import "./App.css";
 
 const router = createBrowserRouter([
   {
