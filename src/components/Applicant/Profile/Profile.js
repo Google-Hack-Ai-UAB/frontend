@@ -15,43 +15,69 @@ const Profile = () => {
     socialMedia: "",
   });
 
-  useEffect(() => {
-    const fetchProfileData = async () => {
-      if (!isAuthenticated) return;
+  const fetchProfileData = async () => {
+    if (!isAuthenticated) return;
 
-      try {
-        const token = await getAccessTokenSilently();
-        const response = await fetch(`${API_URL}/applicant`, {
-          method: "GET",
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
+    try {
+      const token = await getAccessTokenSilently();
+      const response = await fetch(`${API_URL}/applicant`, {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
 
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-
-        const data = await response.json();
-        setProfileData(data.userData);
-        setFormData({
-          fullName: data.userData.name,
-          email: data.userData.email,
-          phone: "",
-          address: "",
-          bio: "",
-          socialMedia: "",
-        });
-      } catch (error) {
-        console.error("Error fetching profile data:", error);
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
       }
-    };
 
+      const data = await response.json();
+      setProfileData(data.userData);
+      setFormData({
+        fullName: data.userData.fullName || "",
+        email: data.userData.email || "",
+        phone: data.userData.phone || "",
+        address: data.userData.address || "",
+        bio: data.userData.bio || "",
+        socialMedia: data.userData.socialMedia || "",
+      });
+    } catch (error) {
+      console.error("Error fetching profile data:", error);
+    }
+  };
+
+  useEffect(() => {
     fetchProfileData();
   }, [getAccessTokenSilently, isAuthenticated]);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      const token = await getAccessTokenSilently();
+      const response = await fetch(`${API_URL}/applicant`, {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to update profile");
+      }
+
+      console.log("Profile updated successfully");
+
+      fetchProfileData();
+    } catch (error) {
+      console.error("Error updating profile:", error);
+    }
   };
 
   return (
@@ -66,7 +92,7 @@ const Profile = () => {
             User Profile
           </Typography>
         </div>
-        <form className="mb-4">
+        <form className="mb-4" onSubmit={handleSubmit}>
           <TextField
             variant="outlined"
             margin="normal"
@@ -89,6 +115,48 @@ const Profile = () => {
             name="email"
             autoComplete="email"
             value={formData.email}
+            onChange={handleChange}
+          />
+          <TextField
+            variant="outlined"
+            margin="normal"
+            fullWidth
+            id="phone"
+            label="Phone Number"
+            name="phone"
+            value={formData.phone}
+            onChange={handleChange}
+          />
+          <TextField
+            variant="outlined"
+            margin="normal"
+            fullWidth
+            id="address"
+            label="Address"
+            name="address"
+            value={formData.address}
+            onChange={handleChange}
+          />
+          <TextField
+            variant="outlined"
+            margin="normal"
+            fullWidth
+            id="bio"
+            label="Bio"
+            name="bio"
+            multiline
+            rows={4}
+            value={formData.bio}
+            onChange={handleChange}
+          />
+          <TextField
+            variant="outlined"
+            margin="normal"
+            fullWidth
+            id="socialMedia"
+            label="Social Media Links"
+            name="socialMedia"
+            value={formData.socialMedia}
             onChange={handleChange}
           />
           <Button
