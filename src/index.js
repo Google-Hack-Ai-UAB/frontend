@@ -20,8 +20,12 @@ const ProfilePage = () => {
 
 const router = createBrowserRouter([
   {
-    path: "/",
+    path: "/applicant",
     element: <ProtectedRoute component={ProfilePage} />,
+  },
+  {
+    path: "/",
+    element: <ProtectedRoute component={Homepage} />,
   },
 ]);
 
