@@ -1,17 +1,17 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import "./index.css";
 import App from "./App";
 import { Auth0Provider } from "@auth0/auth0-react";
 import { CLIENT_ID, DOMAIN } from "./lib/Constants";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Homepage from "./components/Common/Homepage";
 import ProtectedRoute from "./components/Common/ProtectedRoute";
+import Profile from "./components/Applicant/Profile/Profile";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <ProtectedRoute component={Homepage} />,
+    element: <ProtectedRoute component={Profile} />,
   },
 ]);
 
