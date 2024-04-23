@@ -8,11 +8,20 @@ import Homepage from "./components/Common/Homepage";
 import ProtectedRoute from "./components/Common/ProtectedRoute";
 import Profile from "./components/Applicant/Profile/Profile";
 import "./App.css";
+import Layout from "./components/Common/Layout";
+
+const ProfilePage = () => {
+  return (
+    <Layout>
+      <Profile></Profile>
+    </Layout>
+  );
+};
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <ProtectedRoute component={Profile} />,
+    element: <ProtectedRoute component={ProfilePage} />,
   },
 ]);
 

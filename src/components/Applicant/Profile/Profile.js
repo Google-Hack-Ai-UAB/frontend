@@ -84,17 +84,20 @@ const Profile = () => {
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col justify-center items-center">
       <div className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 flex flex-col w-full max-w-md">
-        <div className="mb-4">
+        <div className="mb-2">
           <Avatar
             className="mx-auto w-20 h-20"
             src={profileData?.picture}
           ></Avatar>
           <Typography component="h1" variant="h5" className="text-center mt-4">
-            User Profile
+            Applicant Profile
           </Typography>
-          <div className="flex flex-col">
+          <div className="flex flex-col mt-2">
             <Typography>Upload your resume:</Typography>
             <FileUploader></FileUploader>
+            {profileData?.pdf ? (
+              <Typography>Your current resume: {profileData.pdf}</Typography>
+            ) : null}
           </div>
         </div>
         <form className="mb-4" onSubmit={handleSubmit}>
