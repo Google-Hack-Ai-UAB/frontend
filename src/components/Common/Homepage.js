@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
-import FileUploader from "../Files/FileUploader";
 import { API_URL } from "../../lib/Constants";
-import { useHistory, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
 
 const Homepage = () => {

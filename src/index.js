@@ -9,6 +9,8 @@ import ProtectedRoute from "./components/Common/ProtectedRoute";
 import Profile from "./components/Applicant/Profile/Profile";
 import "./App.css";
 import Layout from "./components/Common/Layout";
+import RecruiterView from "./components/Recruiter/RecruiterView";
+import Jobs from "./components/Applicant/Jobs";
 
 const ProfilePage = () => {
   return (
@@ -18,14 +20,38 @@ const ProfilePage = () => {
   );
 };
 
+const RecruiterPage = () => {
+  return (
+    <Layout>
+      <RecruiterView></RecruiterView>
+    </Layout>
+  );
+};
+
+const JobPage = () => {
+  return (
+    <Layout>
+      <Jobs></Jobs>
+    </Layout>
+  );
+};
+
 const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <ProtectedRoute component={Homepage} />,
+  },
   {
     path: "/applicant",
     element: <ProtectedRoute component={ProfilePage} />,
   },
   {
-    path: "/",
-    element: <ProtectedRoute component={Homepage} />,
+    path: "/jobs",
+    element: <ProtectedRoute component={JobPage} />,
+  },
+  {
+    path: "/recruiter",
+    element: <ProtectedRoute component={RecruiterPage} />,
   },
 ]);
 
@@ -38,6 +64,8 @@ root.render(
       authorizationParams={{
         redirect_uri: window.location.origin,
       }}
+      cacheLocation="localstorage"
+      useRefreshTokens={true}
     >
       <RouterProvider router={router}></RouterProvider>
     </Auth0Provider>

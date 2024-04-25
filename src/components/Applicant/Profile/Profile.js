@@ -3,6 +3,7 @@ import { Avatar, Button, TextField, Typography } from "@mui/material";
 import { API_URL } from "../../../lib/Constants";
 import { useAuth0 } from "@auth0/auth0-react";
 import FileUploader from "../../Files/FileUploader";
+import JobTable from "./JobTable";
 
 const Profile = () => {
   const { getAccessTokenSilently, isAuthenticated } = useAuth0();
@@ -177,6 +178,7 @@ const Profile = () => {
             Save
           </Button>
         </form>
+        <JobTable></JobTable>
       </div>
     </div>
   );

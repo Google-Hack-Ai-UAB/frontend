@@ -1,0 +1,27 @@
+import React from "react";
+import { useNavigate } from "react-router-dom";
+import { useAuth0 } from "@auth0/auth0-react";
+
+const ProtectedRoute = ({ component: Component, ...rest }) => {
+  const navigate = useNavigate();
+  const { isAuthenticated, isLoading, loginWithRedirect } = useAuth0();
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (!isAuthenticated && !isLoading) {
+    console.log("NOT AUTH'd");
+    loginWithRedirect();
+    return <div>Loading...</div>;
+  }
+
+  if (!isAuthenticated) {
+    navigate("/");
+    return null;
+  }
+
+  return <Component {...rest} />;
+};
+
+export default ProtectedRoute;
