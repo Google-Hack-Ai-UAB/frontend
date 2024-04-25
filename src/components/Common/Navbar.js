@@ -14,7 +14,7 @@ export default function Navbar() {
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static">
+      <AppBar position="sticky">
         <Toolbar>
           <Button color="inherit" onClick={handleLogout}>
             Logout
