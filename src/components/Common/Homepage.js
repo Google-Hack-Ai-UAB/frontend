@@ -18,11 +18,11 @@ const Homepage = () => {
           Authorization: `Bearer ${token}`,
         },
       });
-
+      
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
-
+      
       const data = await response.json();
       setUserData(data.userData);
     } catch (error) {
@@ -36,15 +36,17 @@ const Homepage = () => {
 
   useEffect(() => {
     if (userData) {
-      if (userData.role === "applicant") {
+      if (userData.role === "applicant" && !userData.fullName){
         history("/applicant");
+      }else if (userData.role === "applicant") {
+        history("/jobs");
       } else if (userData.role === "recruiter") {
         history("/recruiter");
       }
     }
   }, [userData, history]);
 
-  return <div></div>;
+  return <div>Homepage</div>;
 };
 
 export default Homepage;
