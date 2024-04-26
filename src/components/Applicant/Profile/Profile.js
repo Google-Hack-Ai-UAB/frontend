@@ -75,6 +75,7 @@ const Profile = () => {
       }
 
       console.log("Profile updated successfully");
+      alert("Profile updated successfully!");
 
       fetchProfileData();
     } catch (error) {
