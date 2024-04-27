@@ -84,8 +84,8 @@ const Profile = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 flex flex-col justify-center items-center">
-      <div className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 flex flex-col w-full max-w-md mt-4">
+    <div className="min-h-screen bg-gray-100 flex flex-row justify-center items-center h-screen">
+      <div className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 ml-4 flex flex-col w-1/2 mt-4">
         <div className="mb-2">
           <Avatar
             className="mx-auto w-20 h-20"
@@ -179,8 +179,8 @@ const Profile = () => {
             Save
           </Button>
         </form>
-        <JobTable></JobTable>
       </div>
+      <JobTable></JobTable>
     </div>
   );
 };
