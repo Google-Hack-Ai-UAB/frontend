@@ -25,6 +25,7 @@ const Homepage = () => {
 
       const data = await response.json();
       setUserData(data.userData);
+      localStorage.setItem("userData", JSON.stringify(data.userData));
     } catch (error) {
       console.error("Error fetching profile data:", error);
     }

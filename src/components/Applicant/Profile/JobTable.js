@@ -8,6 +8,7 @@ import {
   TableRow,
   Paper,
   Button,
+  Typography,
 } from "@mui/material";
 import { useAuth0 } from "@auth0/auth0-react";
 import { API_URL } from "../../../lib/Constants";
@@ -42,11 +43,9 @@ const JobTable = () => {
   }, []);
 
   return (
-    <div id="table" className="h-full">
-      <TableContainer
-        component={Paper}
-        className="px-8 pt-6 pb-8 mb-4 ml-4 mt-4"
-      >
+    <div id="table" className="h-full w-full mr-4 mt-4">
+      <Typography>Job Applications</Typography>
+      <TableContainer component={Paper} className="pt-2 pb-2 mb-4 mt-4">
         <Table>
           <TableHead>
             <TableRow>
