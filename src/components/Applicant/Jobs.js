@@ -35,7 +35,6 @@ const Jobs = () => {
 
   return jobs.length > 0 ? (
     <div id="jobs">
-      <Typography className="ml-4 w-full">Job Postings</Typography>
       <div className="flex flex-row w-full">
         <List className="w-[50%]">
           {jobs.map((job, index) => (

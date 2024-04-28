@@ -9,7 +9,9 @@ const JobPreview = ({ job, setJob }) => {
       }}
     >
       <Box className="bg-white rounded-md p-2 text-blue-900 w-full shadow-md">
-        <Typography variant="h6">{job.job_title}</Typography>
+        <Typography variant="h6" className="!font-bold">
+          {job.job_title}
+        </Typography>
         <Box className="flex flex-row space-x-2 items-center">
           <Typography variant="body2" className="text-blue-700">
             {job.company}

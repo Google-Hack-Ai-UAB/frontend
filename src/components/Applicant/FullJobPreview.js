@@ -3,6 +3,7 @@ import Typography from "@mui/material/Typography";
 import { Button } from "@mui/base";
 import { useAuth0 } from "@auth0/auth0-react";
 import { API_URL } from "../../lib/Constants";
+import { Divider } from "@mui/material";
 
 const FullJobPreview = ({ job }) => {
   const { getAccessTokenSilently } = useAuth0();
@@ -34,14 +35,14 @@ const FullJobPreview = ({ job }) => {
       {job ? (
         <div
           id="full-job-preview"
-          className="bg-slate-600 rounded-md max-h-screen overflow-scroll p-2 text-white w-full"
+          className="bg-white rounded-md max-h-screen overflow-scroll p-2 text-blue-900 w-full shadow-md"
         >
           <div className="flex flex-row">
-            <Typography variant="h5" className="w-3/4">
+            <Typography variant="h5" className="w-3/4 !font-bold">
               {job.job_title}
             </Typography>
             <Button
-              className="m-auto bg-blue-500 p-2 rounded-md"
+              className="ml-auto mr-2 bg-blue-500 p-2 rounded-md text-white"
               onClick={handleApply}
             >
               Easy Apply
@@ -50,6 +51,8 @@ const FullJobPreview = ({ job }) => {
           <Typography>{job.company}</Typography>
           <Typography>{job.job_type}</Typography>
           <Typography>{job.salary}</Typography>
+          <Divider sx={{ borderBottomWidth: 3 }}></Divider>
+          <br />
           <div style={{ whiteSpace: "pre-wrap" }}>{job.description}</div>
         </div>
       ) : null}
