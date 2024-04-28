@@ -3,8 +3,8 @@ import Navbar from "./Navbar";
 
 const Layout = ({ children }) => {
   return (
-    <div className="container min-h-screen min-w-[100vw]">
-      <main>
+    <div className="container h-full min-w-[100vw]">
+      <main className="h-full">
         <Navbar></Navbar>
         {children}
       </main>
