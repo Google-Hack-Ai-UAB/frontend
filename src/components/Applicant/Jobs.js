@@ -3,6 +3,7 @@ import { API_URL } from "../../lib/Constants";
 import JobPreview from "./JobPreview";
 import { List, Typography } from "@mui/material";
 import FullJobPreview from "./FullJobPreview";
+import { ThreeDots } from "react-loader-spinner";
 
 const Jobs = () => {
   const [jobs, setJobs] = useState([]);
@@ -32,24 +33,21 @@ const Jobs = () => {
     setFullJob(jobs[0]);
   }, [jobs]);
 
-  return (
+  return jobs.length > 0 ? (
     <div id="jobs">
-      <Typography className="!ml-4 w-full">Job Postings</Typography>
+      <Typography className="ml-4 w-full">Job Postings</Typography>
       <div className="flex flex-row w-full">
         <List className="w-[50%]">
-          {jobs &&
-            jobs.map((job, index) => {
-              return (
-                <JobPreview
-                  key={index}
-                  job={job}
-                  setJob={setFullJob}
-                ></JobPreview>
-              );
-            })}
+          {jobs.map((job, index) => (
+            <JobPreview key={index} job={job} setJob={setFullJob}></JobPreview>
+          ))}
         </List>
         <FullJobPreview job={fullJob}></FullJobPreview>
       </div>
+    </div>
+  ) : (
+    <div className="h-full w-full flex justify-center items-center">
+      <ThreeDots className="m-auto" color="#1976d2" />
     </div>
   );
 };
