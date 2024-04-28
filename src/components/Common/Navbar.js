@@ -19,6 +19,10 @@ export default function Navbar() {
     navigate("/jobs");
   };
 
+  const handleVisitProfile = () => {
+    navigate("/applicant");
+  };
+
   React.useEffect(() => {
     const storedUserData = JSON.parse(localStorage.getItem("userData"));
     setUserData(storedUserData);
@@ -28,11 +32,18 @@ export default function Navbar() {
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="sticky">
         <Toolbar className="justify-between">
-          {userData && userData.role === "applicant" ? (
-            <Button color="inherit" onClick={handleVisitJobs}>
-              View Jobs
-            </Button>
-          ) : null}
+          <div>
+            {userData && userData.role === "applicant" ? (
+              <Button color="inherit" onClick={handleVisitProfile}>
+                Applicant Profile
+              </Button>
+            ) : null}
+            {userData && userData.role === "applicant" ? (
+              <Button color="inherit" onClick={handleVisitJobs}>
+                View Jobs
+              </Button>
+            ) : null}
+          </div>
           <Button color="inherit" onClick={handleLogout}>
             Logout
           </Button>
