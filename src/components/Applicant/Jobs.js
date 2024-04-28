@@ -34,9 +34,7 @@ const Jobs = () => {
 
   return (
     <div id="jobs">
-      <Typography variant="h3" className="!ml-4 w-full">
-        Job Postings
-      </Typography>
+      <Typography className="!ml-4 w-full">Job Postings</Typography>
       <div className="flex flex-row w-full">
         <List className="w-[50%]">
           {jobs &&

@@ -8,24 +8,25 @@ const JobPreview = ({ job, setJob }) => {
         setJob(job);
       }}
     >
-      <Box className="bg-slate-600 rounded-md p-2 text-white w-full">
+      <Box className="bg-white rounded-md p-2 text-blue-900 w-full shadow-md">
         <Typography variant="h6">{job.job_title}</Typography>
-        <Box className="flex flex-row">
-          <Typography variant="body2">{job.company}</Typography>
+        <Box className="flex flex-row space-x-2 items-center">
+          <Typography variant="body2" className="text-blue-700">
+            {job.company}
+          </Typography>
           <Typography
             variant="body2"
-            className="!ml-2 rounded-sm p-1 bg-slate-400"
+            className="ml-2 p-1 rounded-sm bg-blue-200"
           >
             {job.salary || "Salary not listed"}
           </Typography>
           <Typography
             variant="body2"
-            className="!ml-2 p-1 rounded-sm bg-slate-400"
+            className="ml-2 p-1 rounded-sm bg-blue-200"
           >
             {job.job_type}
           </Typography>
         </Box>
-        <Typography></Typography>
       </Box>
     </ListItem>
   );

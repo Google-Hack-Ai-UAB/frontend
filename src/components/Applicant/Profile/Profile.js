@@ -4,6 +4,7 @@ import { API_URL } from "../../../lib/Constants";
 import { useAuth0 } from "@auth0/auth0-react";
 import FileUploader from "../../Files/FileUploader";
 import JobTable from "./JobTable";
+import { ThreeDots } from "react-loader-spinner";
 
 const Profile = () => {
   const { getAccessTokenSilently, isAuthenticated } = useAuth0();
@@ -83,14 +84,11 @@ const Profile = () => {
     }
   };
 
-  return (
+  return profileData ? (
     <div className="h-full bg-gray-100 flex flex-row">
       <div className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 ml-4 mr-4 flex flex-col w-1/2 mt-4">
         <div className="mb-2">
-          <Avatar
-            className="mx-auto w-20 h-20"
-            src={profileData?.picture}
-          ></Avatar>
+          <Avatar className="mx-auto w-20 h-20" src={profileData?.picture} />
           <Typography component="h1" variant="h5" className="text-center mt-4">
             Applicant Profile
           </Typography>
@@ -181,6 +179,10 @@ const Profile = () => {
         </form>
       </div>
       <JobTable></JobTable>
+    </div>
+  ) : (
+    <div className="h-full w-full flex justify-center items-center">
+      <ThreeDots className="m-auto" color="#1976d2" />
     </div>
   );
 };

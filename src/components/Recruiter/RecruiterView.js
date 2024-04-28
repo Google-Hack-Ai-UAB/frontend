@@ -46,7 +46,7 @@ const RecruiterView = () => {
     fetchJobs();
   }, []);
   return (
-    <div className="min-h-screen bg-gray-100 flex flex-col items-center">
+    <div className="min-h-screen flex flex-col items-center">
       <div id="table" className="h-full">
         <TableContainer component={Paper} className="px-8 pt-6 pb-8 mb-4 mt-4">
           <Table>
