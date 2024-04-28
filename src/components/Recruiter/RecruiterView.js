@@ -11,10 +11,15 @@ import {
   Paper,
   Button,
 } from "@mui/material";
+import ApplicationPopupView from "../Common/ApplicationPopupView";
 
 const RecruiterView = () => {
   const { getAccessTokenSilently } = useAuth0();
   const [jobs, setJobs] = useState([]);
+
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
 
   const fetchJobs = async () => {
     try {
@@ -64,8 +69,15 @@ const RecruiterView = () => {
                     <TableCell>{row.applicantEmail}</TableCell>
                     <TableCell>{row.timeCreated}</TableCell>
                     <TableCell>
-                      <Button size="small">View Application</Button>
+                      <Button size="small" onClick={handleOpen}>
+                        View Application
+                      </Button>
                     </TableCell>
+                    <ApplicationPopupView
+                      application={row}
+                      open={open}
+                      handleClose={handleClose}
+                    ></ApplicationPopupView>
                   </TableRow>
                 ))}
             </TableBody>
