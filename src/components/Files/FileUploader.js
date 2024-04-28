@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { API_URL } from "../../lib/Constants";
 import { useAuth0 } from "@auth0/auth0-react";
+import { Avatar, Button, TextField, Typography } from "@mui/material";
+import CloudUploadIcon from "@mui/icons-material/CloudUpload"; // Import the icon
 
 const FileUploader = () => {
   const { getAccessTokenSilently, isAuthenticated } = useAuth0();
@@ -66,15 +68,29 @@ const FileUploader = () => {
   return (
     <div>
       <input
+        style={{ marginTop: ".8em", display: 'inline-block', overflow: 'hidden',}}
         type="file"
         onChange={handleFileChange}
         accept=".jpg,.jpeg,.png,.gif,.pdf"
       />
-      <button onClick={handleFileUpload}>Upload</button>
+
       {selectedFile && (
-        <div>
-          Selected file: {selectedFile.name} (
-          {(selectedFile.size / 1024).toFixed(2)} KB)
+        <div style={{ display: "flex", alignItems: "center", marginTop: "1em" }}>
+          <Button
+            onClick={handleFileUpload}
+            variant="contained"
+            color="primary"
+            size="large"
+            startIcon={<CloudUploadIcon />}
+          >
+            Upload
+          </Button>
+          <div style={{ marginLeft: "16px", textAlign: "right" }}>
+            {selectedFile &&
+              `Selected file: ${selectedFile.name} (${(
+                selectedFile.size / 1024
+              ).toFixed(2)} KB)`}
+          </div>
         </div>
       )}
 
