@@ -30,7 +30,7 @@ export default function Navbar() {
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="sticky">
+      <AppBar position="fixed">
         <Toolbar className="justify-between">
           <div>
             {userData && userData.role === "applicant" ? (

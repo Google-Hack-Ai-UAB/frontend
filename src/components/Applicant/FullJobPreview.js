@@ -30,34 +30,30 @@ const FullJobPreview = ({ job }) => {
     }
   };
 
-  return (
-    <div className="mt-4 mb-4 w-1/2 mr-4">
-      {job ? (
-        <div
-          id="full-job-preview"
-          className="bg-white rounded-md max-h-screen overflow-scroll p-2 text-blue-900 w-full shadow-md"
+  return job ? (
+    <div
+      id="full-job-preview"
+      className="h-[90%] bg-white rounded-md overflow-scroll p-2 text-blue-900 shadow-md w-1/2 mt-2"
+    >
+      <div className="flex flex-row">
+        <Typography variant="h5" className="w-3/4 !font-bold">
+          {job.job_title}
+        </Typography>
+        <Button
+          className="ml-auto mr-2 bg-blue-500 p-2 rounded-md text-white"
+          onClick={handleApply}
         >
-          <div className="flex flex-row">
-            <Typography variant="h5" className="w-3/4 !font-bold">
-              {job.job_title}
-            </Typography>
-            <Button
-              className="ml-auto mr-2 bg-blue-500 p-2 rounded-md text-white"
-              onClick={handleApply}
-            >
-              Easy Apply
-            </Button>
-          </div>
-          <Typography>{job.company}</Typography>
-          <Typography>{job.job_type}</Typography>
-          <Typography>{job.salary}</Typography>
-          <Divider sx={{ borderBottomWidth: 3 }}></Divider>
-          <br />
-          <div style={{ whiteSpace: "pre-wrap" }}>{job.description}</div>
-        </div>
-      ) : null}
+          Easy Apply
+        </Button>
+      </div>
+      <Typography>{job.company}</Typography>
+      <Typography>{job.job_type}</Typography>
+      <Typography>{job.salary}</Typography>
+      <Divider sx={{ borderBottomWidth: 3 }}></Divider>
+      <br />
+      <div style={{ whiteSpace: "pre-wrap" }}>{job.description}</div>
     </div>
-  );
+  ) : null;
 };
 
 export default FullJobPreview;

@@ -43,7 +43,7 @@ const JobTable = () => {
   }, []);
 
   return (
-    <div id="table" className="h-full w-full mr-4 mt-4">
+    <div id="table" className="h-full w-full mr-4 pt-4">
       <Typography>Job Applications</Typography>
       <TableContainer component={Paper} className="pt-2 pb-2 mb-4 mt-4">
         <Table>

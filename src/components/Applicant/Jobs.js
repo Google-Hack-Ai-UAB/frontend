@@ -34,15 +34,17 @@ const Jobs = () => {
   }, [jobs]);
 
   return jobs.length > 0 ? (
-    <div id="jobs">
-      <div className="flex flex-row w-full">
-        <List className="w-[50%]">
-          {jobs.map((job, index) => (
-            <JobPreview key={index} job={job} setJob={setFullJob}></JobPreview>
-          ))}
-        </List>
-        <FullJobPreview job={fullJob}></FullJobPreview>
-      </div>
+    <div
+      id="jobs"
+      className="flex flex-row h-full w-full"
+      style={{ marginTop: 70 }}
+    >
+      <List className="max-h-full w-[50%] !pt-0">
+        {jobs.map((job, index) => (
+          <JobPreview key={index} job={job} setJob={setFullJob}></JobPreview>
+        ))}
+      </List>
+      <FullJobPreview job={fullJob}></FullJobPreview>
     </div>
   ) : (
     <div className="h-full w-full flex justify-center items-center">
