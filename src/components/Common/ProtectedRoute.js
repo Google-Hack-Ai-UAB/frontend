@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
+import { ThreeDots } from "react-loader-spinner";
 
 const ProtectedRoute = ({ component: Component, ...rest }) => {
   const navigate = useNavigate();
@@ -18,12 +19,20 @@ const ProtectedRoute = ({ component: Component, ...rest }) => {
   console.log(`isLoading: ${isLoading}`);
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return (
+      <div className="h-full w-full flex justify-center items-center">
+        <ThreeDots className="m-auto" color="#1976d2" />
+      </div>
+    );
   }
 
   if (!isAuthenticated) {
     // Display a message or return null while waiting for authentication
-    return <div>Authenticating...</div>;
+    return (
+      <div className="h-full w-full flex justify-center items-center">
+        <ThreeDots className="m-auto" color="#1976d2" />
+      </div>
+    );
   }
 
   return <Component {...rest} />;

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { API_URL } from "../../lib/Constants";
 import { useNavigate } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
+import { ThreeDots } from "react-loader-spinner";
 
 const Homepage = () => {
   const [userData, setUserData] = useState(null);
@@ -47,7 +48,11 @@ const Homepage = () => {
     }
   }, [userData, history]);
 
-  return <div>Homepage</div>;
+  return (
+    <div className="h-full w-full flex justify-center items-center">
+      <ThreeDots className="m-auto" color="#1976d2" />
+    </div>
+  );
 };
 
 export default Homepage;

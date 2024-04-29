@@ -46,7 +46,10 @@ const RecruiterView = () => {
     fetchJobs();
   }, []);
   return (
-    <div className="min-h-screen flex flex-col items-center">
+    <div
+      className="min-h-screen flex flex-col items-center"
+      style={{ marginTop: 70 }}
+    >
       <div id="table" className="h-full">
         <TableContainer component={Paper} className="px-8 pt-6 pb-8 mb-4 mt-4">
           <Table>
@@ -64,9 +67,7 @@ const RecruiterView = () => {
                 jobs.map((row, index) => (
                   <TableRow key={index}>
                     <TableCell>{row.jobTitle}</TableCell>
-                    <TableCell>{row.status}</TableCell>const [open, setOpen] =
-                    React.useState(false); const handleOpen = () =>
-                    setOpen(true); const handleClose = () => setOpen(false);
+                    <TableCell>{row.status}</TableCell>
                     <TableCell>{row.fullName}</TableCell>
                     <TableCell>{row.applicantEmail}</TableCell>
                     <TableCell>{row.timeCreated}</TableCell>

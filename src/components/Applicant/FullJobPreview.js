@@ -33,7 +33,7 @@ const FullJobPreview = ({ job }) => {
   return job ? (
     <div
       id="full-job-preview"
-      className="h-[90%] bg-white rounded-md overflow-scroll p-2 text-blue-900 shadow-md w-1/2 mt-2"
+      className="max-h-[95%] bg-white rounded-md overflow-scroll p-2 text-blue-900 shadow-md w-1/2 mt-2"
     >
       <div className="flex flex-row">
         <Typography variant="h5" className="w-3/4 !font-bold">
