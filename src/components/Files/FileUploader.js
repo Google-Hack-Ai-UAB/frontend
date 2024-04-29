@@ -68,28 +68,49 @@ const FileUploader = () => {
   return (
     <div>
       <input
-        style={{ marginTop: ".8em", display: 'inline-block', overflow: 'hidden',}}
+        style={{
+          marginTop: ".8em",
+          display: "inline-block",
+          overflow: "hidden",
+          width: "100%",
+        }}
         type="file"
         onChange={handleFileChange}
         accept=".jpg,.jpeg,.png,.gif,.pdf"
       />
 
       {selectedFile && (
-        <div style={{ display: "flex", alignItems: "center", marginTop: "1em" }}>
-          <Button
+        <div
+          style={{ display: "flex", alignItems: "center", marginTop: "1em" }}
+        >
+          <button
+            style={{
+              backgroundColor: "#007BFE",
+              color: "white",
+              padding: ".6em",
+              borderRadius: ".5em",
+              paddingRight: "0",
+              paddingLeft: "0",
+              marginLeft: "0.3em",
+              width: "7.8em",
+             
+            }}
             onClick={handleFileUpload}
             variant="contained"
             color="primary"
             size="large"
             startIcon={<CloudUploadIcon />}
           >
+            <CloudUploadIcon
+            style ={{marginLeft: "0em", marginRight: "0.5em"}}></CloudUploadIcon>
             Upload
-          </Button>
-          <div style={{ marginLeft: "16px", textAlign: "right" }}>
-            {selectedFile &&
+
+          </button>
+          <div style={{ marginLeft: "0", textAlign: "right" }}>
+            {/* {selectedFile &&
               `Selected file: ${selectedFile.name} (${(
                 selectedFile.size / 1024
-              ).toFixed(2)} KB)`}
+              ).toFixed(2)} KB)`} */}
           </div>
         </div>
       )}

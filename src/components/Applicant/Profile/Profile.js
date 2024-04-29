@@ -5,6 +5,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 import FileUploader from "../../Files/FileUploader";
 import JobTable from "./JobTable";
 import { ThreeDots } from "react-loader-spinner";
+import "./profile.css";
 
 const Profile = () => {
   const { getAccessTokenSilently, isAuthenticated } = useAuth0();
@@ -87,8 +88,11 @@ const Profile = () => {
   };
 
   return profileData ? (
-    <div className="h-full bg-gray-100 flex flex-row" style={{ marginTop: 70 }}>
-      <div className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 ml-4 mr-4 flex flex-col w-1/2 mt-4">
+    <div
+      className="bg-gray-100 flex flex-col md:flex-row items-start"  // Adjust alignment to start to ensure containers grow with content
+      style={{ marginTop: 65, minHeight: 'calc(100vh - 65px)' }}  // Ensure minimum height is full screen minus any top margin
+    >
+      <div className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 mt-4 mx-4 flex flex-col w-full md:w-1/2">
         <div className="mb-2">
           <Avatar className="mx-auto w-20 h-20" src={profileData?.picture} />
           <Typography component="h1" variant="h5" className="text-center mt-4">
@@ -97,9 +101,10 @@ const Profile = () => {
           <div className="flex flex-col mt-2">
             <Typography>Upload your resume:</Typography>
             <FileUploader></FileUploader>
-            {profileData?.pdf ? (
-              <Typography>Your current resume: {profileData.pdf}</Typography>
-            ) : null}
+            {profileData?.pdf && (
+              <Typography
+              class="mt-3 font-bold">Your current resume: {profileData.pdf}</Typography>
+            )}
           </div>
         </div>
         <form className="mb-4" onSubmit={handleSubmit}>
@@ -169,18 +174,31 @@ const Profile = () => {
             value={formData.socialMedia}
             onChange={handleChange}
           />
-          <Button
+          <button
             type="submit"
             fullWidth
             variant="contained"
             color="primary"
             className="mt-4"
+            style={{
+              backgroundColor: "#007BFE",
+              color: "white",
+              padding: ".6em",
+              borderRadius: ".5em",
+              paddingRight: "0",
+              paddingLeft: "0",
+             
+              width: "100%",
+             
+            }}
           >
             Save
-          </Button>
+          </button>
         </form>
       </div>
-      <JobTable></JobTable>
+      <div className="w-full md:w-1/2 mx-4">
+        <JobTable />
+      </div>
     </div>
   ) : (
     <div className="h-full w-full flex justify-center items-center">

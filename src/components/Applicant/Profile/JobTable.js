@@ -96,8 +96,8 @@ const JobTable = () => {
       </TableContainer>
     </div>
   ) : (
-    <div className="h-full w-full flex justify-center items-center">
-      <FallingLines className="m-auto" color="blue" />
+    <div className="h-full w-full flex justify-center items-center" style={{ minHeight: 'calc(100vh - 100px)' }}>
+      <FallingLines color="#1976d2" width="100" />
     </div>
   );
 };

@@ -39,12 +39,14 @@ const FullJobPreview = ({ job }) => {
         <Typography variant="h5" className="w-3/4 !font-bold">
           {job.job_title}
         </Typography>
-        <Button
-          className="ml-auto mr-2 bg-blue-500 p-2 rounded-md text-white"
+        <button
+          className="ml-auto mt-auto mr-2 bg-blue-500 p-2 rounded-md text-white font-bold max-h-10"
+          style={{minWidth: "6.5em"}}
           onClick={handleApply}
+        
         >
           Easy Apply
-        </Button>
+        </button>
       </div>
       <Typography>{job.company}</Typography>
       <Typography>{job.job_type}</Typography>
