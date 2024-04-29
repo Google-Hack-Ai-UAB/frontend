@@ -11,13 +11,13 @@ import {
   Paper,
   Button,
 } from "@mui/material";
+import VisibilityIcon from '@mui/icons-material/Visibility';
 import ApplicationPopupView from "../Common/ApplicationPopupView";
 
 const RecruiterView = () => {
   const { getAccessTokenSilently } = useAuth0();
   const [jobs, setJobs] = useState([]);
-
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
@@ -38,55 +38,63 @@ const RecruiterView = () => {
       const data = await response.json();
       setJobs(data.jobs);
     } catch (error) {
-      console.error("Error fetching profile data:", error);
+      console.error("Error fetching jobs:", error);
     }
   };
 
   useEffect(() => {
     fetchJobs();
   }, []);
+
   return (
     <div
-      className="min-h-screen flex flex-col items-center"
-      style={{ marginTop: 70 }}
+      className="min-h-screen flex flex-col items-center py-4"
+      style={{ paddingTop: 70 }}
     >
-      <div id="table" className="h-full">
-        <TableContainer component={Paper} className="px-8 pt-6 pb-8 mb-4 mt-4">
-          <Table>
-            <TableHead>
-              <TableRow>
-                <TableCell>Name</TableCell>
-                <TableCell>Status</TableCell>
-                <TableCell>Applicant</TableCell>
-                <TableCell>Applicant Email</TableCell>
-                <TableCell>Time Applied</TableCell>
+      <TableContainer
+        component={Paper}
+        style={{
+          width: '100%', // Ensures it takes the full width of its container
+          maxWidth: '95%', // Limits maximum width to 90% of the viewport width
+          margin: '0 auto', // Centers the table in the available space
+          marginTop: "1em",
+          overflowX: 'auto' // Ensures the table is scrollable horizontally if it overflows
+        }}
+      >
+        <Table stickyHeader>
+          <TableHead>
+            <TableRow>
+              <TableCell>Name</TableCell>
+              <TableCell align="center">Status</TableCell>
+              <TableCell align="center">Applicant</TableCell>
+              <TableCell align="center">Applicant Email</TableCell>
+              <TableCell align="center">Time Applied</TableCell>
+              <TableCell align="center">Action</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {jobs.map((row, index) => (
+              <TableRow key={index}>
+                <TableCell>{row.jobTitle}</TableCell>
+                <TableCell align="center">{row.status}</TableCell>
+                <TableCell align="center">{row.fullName}</TableCell>
+                <TableCell align="center">{row.applicantEmail}</TableCell>
+                <TableCell align="center">{row.timeCreated}</TableCell>
+                <TableCell align="center">
+                  <Button onClick={handleOpen} startIcon={<VisibilityIcon />}>
+                    View Application
+                  </Button>
+                  <ApplicationPopupView
+                    application={row}
+                    open={open}
+                    handleClose={handleClose}
+                  />
+                </TableCell>
               </TableRow>
-            </TableHead>
-            <TableBody>
-              {jobs &&
-                jobs.map((row, index) => (
-                  <TableRow key={index}>
-                    <TableCell>{row.jobTitle}</TableCell>
-                    <TableCell>{row.status}</TableCell>
-                    <TableCell>{row.fullName}</TableCell>
-                    <TableCell>{row.applicantEmail}</TableCell>
-                    <TableCell>{row.timeCreated}</TableCell>
-                    <TableCell>
-                      <Button size="small" onClick={handleOpen}>
-                        View Application
-                      </Button>
-                    </TableCell>
-                    <ApplicationPopupView
-                      application={row}
-                      open={open}
-                      handleClose={handleClose}
-                    ></ApplicationPopupView>
-                  </TableRow>
-                ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
-      </div>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
     </div>
   );
 };
