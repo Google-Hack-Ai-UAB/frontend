@@ -12,7 +12,9 @@ import {
 } from "@mui/material";
 import { useAuth0 } from "@auth0/auth0-react";
 import { API_URL } from "../../../lib/Constants";
-import { FallingLines, RotatingLines } from "react-loader-spinner";
+import { FallingLines } from "react-loader-spinner";
+import FullJobPreview from "../FullJobPreview";
+import ApplicationPopupView from "../../Common/ApplicationPopupView";
 
 const JobTable = () => {
   const { getAccessTokenSilently } = useAuth0();
@@ -34,7 +36,7 @@ const JobTable = () => {
       }
 
       const data = await response.json();
-      setJobs(data.jobs);
+      setJobs(data.jobs.map((job) => ({ ...job, open: false })));
       setLoading(false);
     } catch (error) {
       console.error("Error fetching profile data:", error);
@@ -44,6 +46,18 @@ const JobTable = () => {
   useEffect(() => {
     fetchJobs();
   }, []);
+
+  const handleOpen = (index) => {
+    const updatedJobs = [...jobs];
+    updatedJobs[index].open = true;
+    setJobs(updatedJobs);
+  };
+
+  const handleClose = (index) => {
+    const updatedJobs = [...jobs];
+    updatedJobs[index].open = false;
+    setJobs(updatedJobs);
+  };
 
   return !loading ? (
     <div id="table" className="h-full w-full mr-4 pt-4">
@@ -59,18 +73,24 @@ const JobTable = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {jobs &&
-              jobs.map((row, index) => (
-                <TableRow key={index}>
-                  <TableCell>{row.jobTitle}</TableCell>
-                  <TableCell>{row.company}</TableCell>
-                  <TableCell>{row.status}</TableCell>
-                  <TableCell>{row.timeCreated}</TableCell>
-                  <TableCell>
-                    <Button size="small">View Application</Button>
-                  </TableCell>
-                </TableRow>
-              ))}
+            {jobs.map((row, index) => (
+              <TableRow key={index}>
+                <TableCell>{row.jobTitle}</TableCell>
+                <TableCell>{row.company}</TableCell>
+                <TableCell>{row.status}</TableCell>
+                <TableCell>{row.timeCreated}</TableCell>
+                <TableCell>
+                  <Button size="small" onClick={() => handleOpen(index)}>
+                    View Application
+                  </Button>
+                </TableCell>
+                <ApplicationPopupView
+                  application={row}
+                  open={row.open}
+                  handleClose={() => handleClose(index)}
+                />
+              </TableRow>
+            ))}
           </TableBody>
         </Table>
       </TableContainer>
