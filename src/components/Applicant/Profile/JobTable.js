@@ -12,10 +12,12 @@ import {
 } from "@mui/material";
 import { useAuth0 } from "@auth0/auth0-react";
 import { API_URL } from "../../../lib/Constants";
+import { FallingLines, RotatingLines } from "react-loader-spinner";
 
 const JobTable = () => {
   const { getAccessTokenSilently } = useAuth0();
   const [jobs, setJobs] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   const fetchJobs = async () => {
     try {
@@ -33,6 +35,7 @@ const JobTable = () => {
 
       const data = await response.json();
       setJobs(data.jobs);
+      setLoading(false);
     } catch (error) {
       console.error("Error fetching profile data:", error);
     }
@@ -42,7 +45,7 @@ const JobTable = () => {
     fetchJobs();
   }, []);
 
-  return (
+  return !loading ? (
     <div id="table" className="h-full w-full mr-4 pt-4">
       <Typography>Job Applications</Typography>
       <TableContainer component={Paper} className="pt-2 pb-2 mb-4 mt-4">
@@ -71,6 +74,10 @@ const JobTable = () => {
           </TableBody>
         </Table>
       </TableContainer>
+    </div>
+  ) : (
+    <div className="h-full w-full flex justify-center items-center">
+      <FallingLines className="m-auto" color="blue" />
     </div>
   );
 };

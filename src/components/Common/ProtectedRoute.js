@@ -13,7 +13,7 @@ const ProtectedRoute = ({ component: Component, ...rest }) => {
         console.error("Error with login popup:", err);
       });
     }
-  }, [isLoading, isAuthenticated, loginWithRedirect]); // Dependency array ensures this only runs on changes to isLoading or isAuthenticated
+  }, [isLoading, isAuthenticated, loginWithRedirect]);
 
   console.log(`isAuthenticated: ${isAuthenticated}`);
   console.log(`isLoading: ${isLoading}`);
@@ -27,7 +27,6 @@ const ProtectedRoute = ({ component: Component, ...rest }) => {
   }
 
   if (!isAuthenticated) {
-    // Display a message or return null while waiting for authentication
     return (
       <div className="h-full w-full flex justify-center items-center">
         <ThreeDots className="m-auto" color="#1976d2" />

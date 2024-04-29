@@ -50,7 +50,9 @@ const Profile = () => {
   };
 
   useEffect(() => {
-    fetchProfileData();
+    if (isAuthenticated === true) {
+      fetchProfileData();
+    }
   }, [getAccessTokenSilently, isAuthenticated]);
 
   const handleChange = (e) => {
