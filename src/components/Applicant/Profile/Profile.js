@@ -3,6 +3,7 @@ import { Avatar, Button, TextField, Typography } from "@mui/material";
 import { API_URL } from "../../../lib/Constants";
 import { useAuth0 } from "@auth0/auth0-react";
 import FileUploader from "../../Files/FileUploader";
+import { useNavigate } from "react-router-dom";
 import JobTable from "./JobTable";
 import { ThreeDots } from "react-loader-spinner";
 import "./profile.css";
@@ -10,6 +11,7 @@ import "./profile.css";
 const Profile = () => {
   const { getAccessTokenSilently, isAuthenticated } = useAuth0();
   const [profileData, setProfileData] = useState(null);
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     fullName: "",
     email: "",
@@ -24,6 +26,20 @@ const Profile = () => {
 
     try {
       const token = await getAccessTokenSilently();
+      const userResponse = await fetch(`${API_URL}/user`, {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      
+      if (!userResponse.ok) {
+        throw new Error("Network response was not ok");
+      }
+
+      if ((await userResponse.json()).userData.role !== "applicant") navigate("/recruiter"); //Redirects directly to page since / -> /recruiter causes rate limit
+
+
       const response = await fetch(`${API_URL}/applicant`, {
         method: "GET",
         headers: {

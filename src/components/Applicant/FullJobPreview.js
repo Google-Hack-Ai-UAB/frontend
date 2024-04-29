@@ -5,12 +5,25 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { API_URL } from "../../lib/Constants";
 import { Divider } from "@mui/material";
 
+
 const FullJobPreview = ({ job }) => {
   const { getAccessTokenSilently } = useAuth0();
 
   const handleApply = async () => {
     try {
       const token = await getAccessTokenSilently();
+      const userResponse = await fetch(`${API_URL}/user`, {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      
+      if (!userResponse.ok) {
+        throw new Error("Network response was not ok");
+      }
+
+      if ((await userResponse.json()).role !== "applicant") return;
       const response = await fetch(`${API_URL}/apply`, {
         method: "POST",
         headers: {
