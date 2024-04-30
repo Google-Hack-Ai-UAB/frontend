@@ -93,7 +93,6 @@ const FileUploader = () => {
               paddingLeft: "0",
               marginLeft: "0.3em",
               width: "7.8em",
-             
             }}
             onClick={handleFileUpload}
             variant="contained"
@@ -102,9 +101,9 @@ const FileUploader = () => {
             startIcon={<CloudUploadIcon />}
           >
             <CloudUploadIcon
-            style ={{marginLeft: "0em", marginRight: "0.5em"}}></CloudUploadIcon>
+              style={{ marginLeft: "0em", marginRight: "0.5em" }}
+            ></CloudUploadIcon>
             Upload
-
           </button>
           <div style={{ marginLeft: "0", textAlign: "right" }}>
             {/* {selectedFile &&

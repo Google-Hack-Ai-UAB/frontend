@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { Modal } from "@mui/material";
+import { Button, IconButton, Modal } from "@mui/material";
 import { useAuth0 } from "@auth0/auth0-react";
 import { API_URL } from "../../lib/Constants";
+import { CloudDownload } from "@mui/icons-material";
 
 const ApplicationPopupView = ({ application, open, handleClose }) => {
   const [comments, setComments] = useState("");
-  const { getAccessTokenSilently, isAuthenticated } = useAuth0();
+  const { getAccessTokenSilently } = useAuth0();
   const [madeComments, setMadeComments] = useState([]);
 
   const handleCreateComment = async (e) => {
@@ -28,6 +29,7 @@ const ApplicationPopupView = ({ application, open, handleClose }) => {
       if (!response.ok) {
         throw new Error("Failed to update profile");
       }
+      gatherComments();
 
       console.log("Profile updated successfully");
     } catch (error) {
@@ -53,21 +55,38 @@ const ApplicationPopupView = ({ application, open, handleClose }) => {
         throw new Error("Failed to update profile");
       }
       const data = await response.json();
-      setMadeComments(data.comments);
-      gatherComments();
-      console.log("Profile updated successfully");
+
+      if (data) {
+        setMadeComments(data.comments);
+      }
     } catch (error) {
       console.error("Error updating profile:", error);
     }
   };
 
   useEffect(() => {
-    console.log(open);
     if (open === true) {
       gatherComments();
     }
   }, [open]);
 
+  const viewResume = () => {
+    fetch(`${API_URL}/resume/query`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ user: application.applicantEmail }),
+    })
+      .then((response) => response.blob()) // Get the response as a Blob
+      .then((blob) => {
+        const url = URL.createObjectURL(blob); // Create a URL from the Blob
+        window.open(url, "_blank"); // Open the URL in a new tab
+      })
+      .catch((error) => {
+        console.error("Error querying API:", error);
+      });
+  };
   return (
     <Modal open={open} onClose={handleClose}>
       <div className="bg-white p-8 w-1/2 m-auto">
@@ -94,6 +113,18 @@ const ApplicationPopupView = ({ application, open, handleClose }) => {
               <tr>
                 <td className="pr-2 font-semibold">Time Created:</td>
                 <td>{application.timeCreated}</td>
+              </tr>
+              <tr>
+                <td className="pr-2 font-semibold">Resume:</td>
+                <td>
+                  {application.userResume.filename || "No resume uploaded"}
+                </td>
+                {application.userResume.filename ? (
+                  <IconButton size="small" color="black" onClick={viewResume}>
+                    <CloudDownload></CloudDownload>
+                    <p className="ml-2">View</p>
+                  </IconButton>
+                ) : null}
               </tr>
             </tbody>
           </table>

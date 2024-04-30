@@ -11,15 +11,13 @@ import {
   Paper,
   Button,
 } from "@mui/material";
-import VisibilityIcon from '@mui/icons-material/Visibility';
+import VisibilityIcon from "@mui/icons-material/Visibility";
 import ApplicationPopupView from "../Common/ApplicationPopupView";
 
 const RecruiterView = () => {
   const { getAccessTokenSilently } = useAuth0();
   const [jobs, setJobs] = useState([]);
-  const [open, setOpen] = useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const [openRows, setOpenRows] = useState([]);
 
   const fetchJobs = async () => {
     try {
@@ -37,6 +35,7 @@ const RecruiterView = () => {
 
       const data = await response.json();
       setJobs(data.jobs);
+      setOpenRows(Array(data.jobs.length).fill(false));
     } catch (error) {
       console.error("Error fetching jobs:", error);
     }
@@ -46,6 +45,14 @@ const RecruiterView = () => {
     fetchJobs();
   }, []);
 
+  const handleOpen = (index) => {
+    setOpenRows(openRows.map((value, i) => (i === index ? true : value)));
+  };
+
+  const handleClose = (index) => {
+    setOpenRows(openRows.map((value, i) => (i === index ? false : value)));
+  };
+
   return (
     <div
       className="min-h-screen flex flex-col items-center py-4"
@@ -54,11 +61,11 @@ const RecruiterView = () => {
       <TableContainer
         component={Paper}
         style={{
-          width: '100%', // Ensures it takes the full width of its container
-          maxWidth: '95%', // Limits maximum width to 90% of the viewport width
-          margin: '0 auto', // Centers the table in the available space
+          width: "100%", // Ensures it takes the full width of its container
+          maxWidth: "95%", // Limits maximum width to 90% of the viewport width
+          margin: "0 auto", // Centers the table in the available space
           marginTop: "1em",
-          overflowX: 'auto' // Ensures the table is scrollable horizontally if it overflows
+          overflowX: "auto", // Ensures the table is scrollable horizontally if it overflows
         }}
       >
         <Table stickyHeader>
@@ -81,13 +88,16 @@ const RecruiterView = () => {
                 <TableCell align="center">{row.applicantEmail}</TableCell>
                 <TableCell align="center">{row.timeCreated}</TableCell>
                 <TableCell align="center">
-                  <Button onClick={handleOpen} startIcon={<VisibilityIcon />}>
+                  <Button
+                    onClick={() => handleOpen(index)}
+                    startIcon={<VisibilityIcon />}
+                  >
                     View Application
                   </Button>
                   <ApplicationPopupView
                     application={row}
-                    open={open}
-                    handleClose={handleClose}
+                    open={openRows[index]}
+                    handleClose={() => handleClose(index)}
                   />
                 </TableCell>
               </TableRow>
