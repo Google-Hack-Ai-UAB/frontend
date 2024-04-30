@@ -34,7 +34,7 @@ export default function Navbar() {
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="fixed">
         <Toolbar className="justify-between">
-          <div className="flex flex-row items-center align-middle">
+          <div className="flex flex-row items-center align-middle mr-2">
             <img src={logo} style={{ height: 70 }} alt="logo" />
             <Typography>RecruitWise</Typography>
           </div>
