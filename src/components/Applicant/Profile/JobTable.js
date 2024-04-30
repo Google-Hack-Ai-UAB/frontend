@@ -13,8 +13,8 @@ import {
 import { useAuth0 } from "@auth0/auth0-react";
 import { API_URL } from "../../../lib/Constants";
 import { FallingLines } from "react-loader-spinner";
-import FullJobPreview from "../FullJobPreview";
 import ApplicationPopupView from "../../Common/ApplicationPopupView";
+import { renderTimestamp } from "../../../lib/Utils";
 
 const JobTable = () => {
   const { getAccessTokenSilently } = useAuth0();
@@ -78,7 +78,7 @@ const JobTable = () => {
                 <TableCell>{row.jobTitle}</TableCell>
                 <TableCell>{row.company}</TableCell>
                 <TableCell>{row.status}</TableCell>
-                <TableCell>{row.timeCreated}</TableCell>
+                <TableCell>{renderTimestamp(row.timeCreated)}</TableCell>
                 <TableCell>
                   <Button size="small" onClick={() => handleOpen(index)}>
                     View Application
@@ -96,7 +96,10 @@ const JobTable = () => {
       </TableContainer>
     </div>
   ) : (
-    <div className="h-full w-full flex justify-center items-center" style={{ minHeight: 'calc(100vh - 100px)' }}>
+    <div
+      className="h-full w-full flex justify-center items-center"
+      style={{ minHeight: "calc(100vh - 100px)" }}
+    >
       <FallingLines color="#1976d2" width="100" />
     </div>
   );

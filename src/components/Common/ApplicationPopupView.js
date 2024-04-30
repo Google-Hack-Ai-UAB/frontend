@@ -1,13 +1,16 @@
 import React, { useEffect, useState } from "react";
-import { Button, IconButton, Modal } from "@mui/material";
+import { IconButton, Modal } from "@mui/material";
 import { useAuth0 } from "@auth0/auth0-react";
 import { API_URL } from "../../lib/Constants";
 import { CloudDownload } from "@mui/icons-material";
+import { renderTimestamp } from "../../lib/Utils";
+import { FallingLines } from "react-loader-spinner";
 
 const ApplicationPopupView = ({ application, open, handleClose }) => {
   const [comments, setComments] = useState("");
   const { getAccessTokenSilently } = useAuth0();
   const [madeComments, setMadeComments] = useState([]);
+  const [commentsLoading, setCommentsLoading] = useState(true);
 
   const handleCreateComment = async (e) => {
     e.preventDefault();
@@ -58,6 +61,7 @@ const ApplicationPopupView = ({ application, open, handleClose }) => {
 
       if (data) {
         setMadeComments(data.comments);
+        setCommentsLoading(false);
       }
     } catch (error) {
       console.error("Error updating profile:", error);
@@ -78,15 +82,16 @@ const ApplicationPopupView = ({ application, open, handleClose }) => {
       },
       body: JSON.stringify({ user: application.applicantEmail }),
     })
-      .then((response) => response.blob()) // Get the response as a Blob
+      .then((response) => response.blob())
       .then((blob) => {
-        const url = URL.createObjectURL(blob); // Create a URL from the Blob
-        window.open(url, "_blank"); // Open the URL in a new tab
+        const url = URL.createObjectURL(blob);
+        window.open(url, "_blank");
       })
       .catch((error) => {
         console.error("Error querying API:", error);
       });
   };
+
   return (
     <Modal open={open} onClose={handleClose}>
       <div className="bg-white p-8 w-1/2 m-auto">
@@ -112,7 +117,7 @@ const ApplicationPopupView = ({ application, open, handleClose }) => {
               </tr>
               <tr>
                 <td className="pr-2 font-semibold">Time Created:</td>
-                <td>{application.timeCreated}</td>
+                <td>{renderTimestamp(application.timeCreated)}</td>
               </tr>
               <tr>
                 <td className="pr-2 font-semibold">Resume:</td>
@@ -130,21 +135,29 @@ const ApplicationPopupView = ({ application, open, handleClose }) => {
           </table>
         </div>
         <h2 className="text-xl font-bold mb-4">Comments</h2>
-        {madeComments &&
-          madeComments.map((comment, index) => (
-            <div
-              key={index}
-              className="rounded-md bg-gray-100 p-2 border border-black mb-2"
-            >
-              <div className="flex flex-row justify-between">
-                <p className="font-bold">
-                  {comment.userName || comment.userEmail}
-                </p>
-                <p>{comment.timeCreated}</p>
-              </div>
-              <p>{comment.text}</p>
-            </div>
-          ))}
+        {commentsLoading ? (
+          <div>
+            <FallingLines className="m-auto" color="#1976d2" />
+          </div>
+        ) : (
+          <>
+            {madeComments &&
+              madeComments.map((comment, index) => (
+                <div
+                  key={index}
+                  className="rounded-md bg-gray-100 p-2 border border-black mb-2"
+                >
+                  <div className="flex flex-row justify-between">
+                    <p className="font-bold">
+                      {comment.userName || comment.userEmail}
+                    </p>
+                    <p>{renderTimestamp(comment.timeCreated)}</p>
+                  </div>
+                  <p>{comment.text}</p>
+                </div>
+              ))}
+          </>
+        )}
         <br />
         <form onSubmit={handleCreateComment}>
           <textarea

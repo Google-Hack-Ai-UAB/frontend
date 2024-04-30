@@ -13,11 +13,14 @@ import {
 } from "@mui/material";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import ApplicationPopupView from "../Common/ApplicationPopupView";
+import { renderTimestamp } from "../../lib/Utils";
+import { ThreeDots } from "react-loader-spinner";
 
 const RecruiterView = () => {
   const { getAccessTokenSilently } = useAuth0();
   const [jobs, setJobs] = useState([]);
   const [openRows, setOpenRows] = useState([]);
+  const [isLoading, setLoading] = useState(true);
 
   const fetchJobs = async () => {
     try {
@@ -36,6 +39,7 @@ const RecruiterView = () => {
       const data = await response.json();
       setJobs(data.jobs);
       setOpenRows(Array(data.jobs.length).fill(false));
+      setLoading(false);
     } catch (error) {
       console.error("Error fetching jobs:", error);
     }
@@ -53,7 +57,7 @@ const RecruiterView = () => {
     setOpenRows(openRows.map((value, i) => (i === index ? false : value)));
   };
 
-  return (
+  return !isLoading ? (
     <div
       className="min-h-screen flex flex-col items-center py-4"
       style={{ paddingTop: 70 }}
@@ -61,11 +65,11 @@ const RecruiterView = () => {
       <TableContainer
         component={Paper}
         style={{
-          width: "100%", // Ensures it takes the full width of its container
-          maxWidth: "95%", // Limits maximum width to 90% of the viewport width
-          margin: "0 auto", // Centers the table in the available space
+          width: "100%",
+          maxWidth: "95%",
+          margin: "0 auto",
           marginTop: "1em",
-          overflowX: "auto", // Ensures the table is scrollable horizontally if it overflows
+          overflowX: "auto",
         }}
       >
         <Table stickyHeader>
@@ -86,7 +90,9 @@ const RecruiterView = () => {
                 <TableCell align="center">{row.status}</TableCell>
                 <TableCell align="center">{row.fullName}</TableCell>
                 <TableCell align="center">{row.applicantEmail}</TableCell>
-                <TableCell align="center">{row.timeCreated}</TableCell>
+                <TableCell align="center">
+                  {renderTimestamp(row.timeCreated)}
+                </TableCell>
                 <TableCell align="center">
                   <Button
                     onClick={() => handleOpen(index)}
@@ -105,6 +111,10 @@ const RecruiterView = () => {
           </TableBody>
         </Table>
       </TableContainer>
+    </div>
+  ) : (
+    <div className="h-full w-full flex justify-center items-center">
+      <ThreeDots className="m-auto" color="#1976d2" />
     </div>
   );
 };
