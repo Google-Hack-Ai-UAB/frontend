@@ -5,8 +5,10 @@ import Toolbar from "@mui/material/Toolbar";
 import Button from "@mui/material/Button";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useNavigate } from "react-router-dom";
+import { Typography } from "@mui/material";
 
 export default function Navbar() {
+  const logo = require("../../images/recruit.png");
   const navigate = useNavigate();
   const { logout } = useAuth0();
   const [userData, setUserData] = React.useState(null);
@@ -32,6 +34,10 @@ export default function Navbar() {
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="fixed">
         <Toolbar className="justify-between">
+          <div className="flex flex-row items-center align-middle">
+            <img src={logo} style={{ height: 70 }} alt="logo" />
+            <Typography>RecruitWise</Typography>
+          </div>
           <div>
             {userData && userData.role === "applicant" ? (
               <Button color="inherit" onClick={handleVisitProfile}>
