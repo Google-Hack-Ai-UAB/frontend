@@ -132,9 +132,14 @@ const ApplicationPopupView = ({ application, open, handleClose }) => {
         <h2 className="text-xl font-bold mb-4">Comments</h2>
         {madeComments &&
           madeComments.map((comment, index) => (
-            <div key={index} className="rounded-md bg-gray-100 p-2">
+            <div
+              key={index}
+              className="rounded-md bg-gray-100 p-2 border border-black mb-2"
+            >
               <div className="flex flex-row justify-between">
-                <p>{comment.userName || comment.userEmail}</p>
+                <p className="font-bold">
+                  {comment.userName || comment.userEmail}
+                </p>
                 <p>{comment.timeCreated}</p>
               </div>
               <p>{comment.text}</p>
