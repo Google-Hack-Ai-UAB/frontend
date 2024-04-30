@@ -35,10 +35,11 @@ export default function Navbar() {
       <AppBar position="fixed">
         <Toolbar className="justify-between">
           <div className="flex flex-row items-center align-middle mr-2">
-            <img src={logo} style={{ height: 70 }} alt="logo" />
-            <Typography>RecruitWise</Typography>
-          </div>
-          <div>
+            <div className="mr-2 flex flex-row items-center align-middle">
+              <img src={logo} style={{ height: 70 }} alt="logo" />
+              <Typography className="mr-2">RecruitWise</Typography>
+            </div>
+
             {userData && userData.role === "applicant" ? (
               <Button color="inherit" onClick={handleVisitProfile}>
                 Applicant Profile
