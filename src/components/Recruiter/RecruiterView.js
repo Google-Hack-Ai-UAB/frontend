@@ -12,6 +12,7 @@ import {
   Button,
 } from "@mui/material";
 import VisibilityIcon from "@mui/icons-material/Visibility";
+import ChatIcon from '@mui/icons-material/Chat';
 import ApplicationPopupView from "../Common/ApplicationPopupView";
 import { renderTimestamp } from "../../lib/Utils";
 import { ThreeDots } from "react-loader-spinner";
@@ -37,6 +38,7 @@ const RecruiterView = () => {
       }
 
       const data = await response.json();
+      console.log(data.jobs)
       setJobs(data.jobs);
       setOpenRows(Array(data.jobs.length).fill(false));
       setLoading(false);
@@ -75,7 +77,8 @@ const RecruiterView = () => {
         <Table stickyHeader>
           <TableHead>
             <TableRow>
-              <TableCell>Name</TableCell>
+              <TableCell>Job Title</TableCell>
+              <TableCell>Chat</TableCell>
               <TableCell align="center">Status</TableCell>
               <TableCell align="center">Applicant</TableCell>
               <TableCell align="center">Applicant Email</TableCell>
@@ -87,6 +90,14 @@ const RecruiterView = () => {
             {jobs.map((row, index) => (
               <TableRow key={index}>
                 <TableCell>{row.jobTitle}</TableCell>
+                <TableCell align="center">
+                  <Button
+                    href={`/chat/${encodeURIComponent(row.jobId)}`}
+                    startIcon={<ChatIcon />}
+                  >
+                    Chat
+                  </Button>
+                </TableCell>
                 <TableCell align="center">{row.status}</TableCell>
                 <TableCell align="center">{row.fullName}</TableCell>
                 <TableCell align="center">{row.applicantEmail}</TableCell>
