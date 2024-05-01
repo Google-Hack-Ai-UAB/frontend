@@ -12,6 +12,7 @@ import {
   Button,
 } from "@mui/material";
 import VisibilityIcon from "@mui/icons-material/Visibility";
+import ChatIcon from '@mui/icons-material/Chat';
 import ApplicationPopupView from "../Common/ApplicationPopupView";
 
 const RecruiterView = () => {
@@ -88,7 +89,7 @@ const RecruiterView = () => {
                 <TableCell align="center">
                   <Button
                     href={`/chat/${encodeURIComponent(row.jobId)}`}
-                    startIcon={<VisibilityIcon />}
+                    startIcon={<ChatIcon />}
                   >
                     Chat
                   </Button>
