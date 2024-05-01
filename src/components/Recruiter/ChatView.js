@@ -25,9 +25,8 @@ const ChatView = () => {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          text: newMessage,
-          // job_title: jobTitle,
-          job_desc: 'Job Description Here'  // Placeholder
+          job_id: jobId,
+          question: newMessage,
         }),
       });
       const responseData = await response.json();
