@@ -16,6 +16,7 @@ Access at http://localhost:3000/
 * **React**: Javscript framework for building reactive frontend web applications
 * **Auth0**:  For login authentication and authorization preventing candidates from accessing recruiter endpoints.
 * **MaterialUI**: Styling library for custom icons and animations
+* **Docker**: Containerization platform that allows for isolated deployment of the frontend
 
 
 
