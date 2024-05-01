@@ -17,6 +17,7 @@ Access at http://localhost:3000/
 * **Auth0**:  For login authentication and authorization preventing candidates from accessing recruiter endpoints.
 * **MaterialUI**: Styling library for custom icons and animations
 * **Docker**: Containerization platform that allows for isolated deployment of the frontend
+* **TailwindCSS**: Inline CSS tool used for simple and convienent design
 
 
 
