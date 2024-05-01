@@ -1,10 +1,12 @@
 ## How to Run
 
+Run Locally:
+
 `npm install`
 
 `npm start`
 
-or for Docker
+Run with Docker:
 
 `make build up`
 
