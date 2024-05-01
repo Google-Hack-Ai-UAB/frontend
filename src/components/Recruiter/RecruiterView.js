@@ -71,7 +71,8 @@ const RecruiterView = () => {
         <Table stickyHeader>
           <TableHead>
             <TableRow>
-              <TableCell>Name</TableCell>
+              <TableCell>Job Title</TableCell>
+              <TableCell>Chat</TableCell>
               <TableCell align="center">Status</TableCell>
               <TableCell align="center">Applicant</TableCell>
               <TableCell align="center">Applicant Email</TableCell>
@@ -83,6 +84,14 @@ const RecruiterView = () => {
             {jobs.map((row, index) => (
               <TableRow key={index}>
                 <TableCell>{row.jobTitle}</TableCell>
+                <TableCell align="center">
+                  <Button
+                    href={`/chat/${row.jobId}`}
+                    startIcon={<VisibilityIcon />}
+                  >
+                    Chat
+                  </Button>
+                </TableCell>
                 <TableCell align="center">{row.status}</TableCell>
                 <TableCell align="center">{row.fullName}</TableCell>
                 <TableCell align="center">{row.applicantEmail}</TableCell>

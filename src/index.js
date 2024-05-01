@@ -9,6 +9,7 @@ import Profile from "./components/Applicant/Profile/Profile";
 import "./App.css";
 import Layout from "./components/Common/Layout";
 import RecruiterView from "./components/Recruiter/RecruiterView";
+import ChatView from "./components/Recruiter/ChatView";
 import Jobs from "./components/Applicant/Jobs";
 
 const ProfilePage = () => {
@@ -23,6 +24,14 @@ const RecruiterPage = () => {
   return (
     <Layout>
       <RecruiterView></RecruiterView>
+    </Layout>
+  );
+};
+
+const ChatPage = () => {
+  return (
+    <Layout>
+      <ChatView></ChatView>
     </Layout>
   );
 };
@@ -51,6 +60,10 @@ const router = createBrowserRouter([
   {
     path: "/recruiter",
     element: <ProtectedRoute component={RecruiterPage} />,
+  },
+  {
+    path: "/chat",
+    element: <ProtectedRoute component={ChatPage} />,
   },
 ]);
 
