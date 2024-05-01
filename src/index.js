@@ -65,6 +65,10 @@ const router = createBrowserRouter([
     path: "/chat",
     element: <ProtectedRoute component={ChatPage} />,
   },
+  {
+    path: "/chat/:jobId",
+    element: <ProtectedRoute component={ChatPage} />,
+  },
 ]);
 
 const root = ReactDOM.createRoot(document.getElementById("root"));

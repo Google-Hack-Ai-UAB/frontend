@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
 import { API_URL } from "../../lib/Constants";
@@ -7,43 +7,35 @@ import { TextField, Button, Paper } from "@mui/material";
 import SendIcon from "@mui/icons-material/Send";
 
 const ChatView = () => {
-  const { jobId } = useParams();
+  const { jobId, jobTitle } = useParams();
+  const decodedJobId = decodeURIComponent(jobId);
+  const decodedJobTitle = decodeURIComponent(jobTitle);
   const { getAccessTokenSilently } = useAuth0();
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
-
-  const fetchMessages = async () => {
-    try {
-      const token = await getAccessTokenSilently();
-      const response = await fetch(`${API_URL}/chat/${jobId}/messages`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      const data = await response.json();
-      setMessages(data.messages);
-    } catch (error) {
-      console.error('Error fetching messages:', error);
-    }
-  };
-
-  useEffect(() => {
-    fetchMessages();
-  }, [jobId]);
 
   const sendMessage = async () => {
     if (!newMessage) return;
     try {
       const token = await getAccessTokenSilently();
-      await fetch(`${API_URL}/chat/${jobId}/send`, {
+      const response = await fetch(`${API_URL}/chat/${decodedJobId}/query`, {
         method: "POST",
         headers: {
           Authorization: `Bearer ${token}`,
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ message: newMessage }),
+        body: JSON.stringify({
+          text: newMessage,
+          // job_title: jobTitle,
+          job_desc: 'Job Description Here'  // Placeholder
+        }),
       });
-      setMessages([...messages, { text: newMessage, sender: 'You' }]);
+      const responseData = await response.json();
+      setMessages([
+        ...messages,
+        { text: newMessage, sender: 'You' },
+        { text: responseData.answer, sender: 'System' }
+      ]);
       setNewMessage("");
     } catch (error) {
       console.error('Error sending message:', error);
@@ -73,8 +65,9 @@ const ChatView = () => {
             value={newMessage}
             onChange={(e) => setNewMessage(e.target.value)}
             onKeyPress={(event) => {
-              if (event.key === 'Enter') {
+              if (event.key === 'Enter' && !event.shiftKey) {
                 sendMessage();
+                event.preventDefault();
               }
             }}
           />

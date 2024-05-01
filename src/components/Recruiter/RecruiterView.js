@@ -34,6 +34,7 @@ const RecruiterView = () => {
       }
 
       const data = await response.json();
+      console.log(data.jobs)
       setJobs(data.jobs);
       setOpenRows(Array(data.jobs.length).fill(false));
     } catch (error) {
@@ -86,7 +87,7 @@ const RecruiterView = () => {
                 <TableCell>{row.jobTitle}</TableCell>
                 <TableCell align="center">
                   <Button
-                    href={`/chat/${row.jobId}`}
+                    href={`/chat/${encodeURIComponent(row.jobId)}`}
                     startIcon={<VisibilityIcon />}
                   >
                     Chat
