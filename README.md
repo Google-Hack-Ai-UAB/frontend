@@ -2,15 +2,15 @@
 
 ## How to Run
 
-Run Locally:
+Run with Docker:
+
+`make build up`
+
+Or Run Locally:
 
 `npm install`
 
 `npm start`
-
-Run with Docker:
-
-`make build up`
 
 Access at http://localhost:3000/
 
