@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 import { API_URL } from "../../lib/Constants";
+import { useNavigate } from 'react-router-dom';
 import {
   Table,
   TableBody,
@@ -18,14 +19,30 @@ import { renderTimestamp } from "../../lib/Utils";
 import { ThreeDots } from "react-loader-spinner";
 
 const RecruiterView = () => {
-  const { getAccessTokenSilently } = useAuth0();
+  const { getAccessTokenSilently, isAuthenticated } = useAuth0();
+  const navigate = useNavigate();
   const [jobs, setJobs] = useState([]);
   const [openRows, setOpenRows] = useState([]);
   const [isLoading, setLoading] = useState(true);
 
   const fetchJobs = async () => {
+    if (!isAuthenticated) return;
     try {
       const token = await getAccessTokenSilently();
+
+      const userResponse = await fetch(`${API_URL}/user`, {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      
+      if (!userResponse.ok) {
+        throw new Error("Network response was not ok");
+      }
+      const preData = await userResponse.json();
+      if (preData.userData.role !== "recruiter") navigate("/applicant"); //Redirects directly to page since / -> /recruiter causes rate limit
+
       const response = await fetch(`${API_URL}/recruiter_jobs`, {
         method: "GET",
         headers: {
